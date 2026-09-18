@@ -1,0 +1,19 @@
+# Secrets
+.env
+.env.local
+*.key
+credentials.json
+auth.json
+
+# Live data (synced separately)
+/data/*.csv
+/data/*.json
+
+# Cache & logs
+/logs/
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+
+# Keep everything else (version control is audit trail)

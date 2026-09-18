@@ -1,0 +1,24 @@
+name: Weekly Report (Sunday 8 AM)
+
+on:
+  schedule:
+    - cron: '0 8 * * 0'  # 8:00 AM UTC+3 every Sunday
+  workflow_dispatch:
+
+jobs:
+  weekly_report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run weekly report agent
+        run: |
+          python3 agents/weekly-report-agent.py
+      
+      - name: Archive report
+        run: |
+          mkdir -p docs/weekly_reports
+          cp data/weekly_report.json "docs/weekly_reports/report-$(date +%Y-%m-%d).json"
+          git add docs/
+          git commit -m "Weekly report - $(date)" || true
+          git push

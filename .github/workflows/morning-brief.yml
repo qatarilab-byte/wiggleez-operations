@@ -1,0 +1,20 @@
+name: Morning Brief (7 AM Delivery)
+
+on:
+  schedule:
+    - cron: '40 6 * * *'  # 6:40 AM UTC+3 (15 min before 7 AM)
+  workflow_dispatch:
+
+jobs:
+  morning_brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run morning brief agent
+        run: |
+          python3 agents/morning-brief-agent.py
+      
+      - name: Verify delivery
+        run: |
+          python3 -c "import json; data = json.load(open('data/delivery_log.json')); print(f'Brief delivered at {data[\"timestamp\"]}')"
